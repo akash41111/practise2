@@ -1,5 +1,12 @@
 pipeline{
     agent any
+    environment {
+           registry = "akashsingha411/newrepo"
+           registryCredential = 'docker_id_practise'
+           dockerImage = ''
+    }
+    
+    
     tools{
         maven '3.9.6'
     }
@@ -14,6 +21,15 @@ pipeline{
             steps{
                 script{
                     bat 'docker build -t akash/assignment2 .'
+                }
+            }
+        }
+       
+        stage('push image'){
+            steps{
+                script{
+                    bat 'docker tag akash/assignment2:latest akashsingha411/newrepo:latest'
+                    bat 'docker push akashsingha411/newrepo:latest'
                 }
             }
         }
